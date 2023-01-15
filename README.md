@@ -12,6 +12,7 @@ Link local banco: http://localhost:8080/h2-console
 * Foi utilizado o banco de dados H2 como forma rápida e simples para armanezar os dados 
 * Foi utilizado o Eclipse Java EE para desenvolver a API REST
 * O mesmo é um projeto maven 
+* Foi foi a integração com a API para validar o CPF mas o mesmo provavelmente está fora, então deixei a chamada comentada 
 
 # Exemplo de algumas validações: 
 
