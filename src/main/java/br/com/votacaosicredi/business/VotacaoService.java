@@ -46,8 +46,8 @@ public class VotacaoService {
 			buscarPorNomeEhCpf(votacaoRequestDTO.getCpf(), votacaoRequestDTO.getNomePauta());
 			repository.save(converter.paraEntidadeVoto(votacaoRequestDTO));
 			
-			//PRUDUZIR UMA MENSAGEM PARA O NOSSO TOPICO
-			//votacaoProducer.send(votacaoRequestDTO);
+			//PRUDUZIR UMA MENSAGEM PARA O NOSSO TOPICO E FAZ O ENVIO DIRETO
+			votacaoProducer.send(votacaoRequestDTO);
 		} catch (InternalServerException | DataIntegrityViolationException e) {
 			log.error(
 					format(ERRO_AO_SALVAR_VOTO, e.getMessage()), e
