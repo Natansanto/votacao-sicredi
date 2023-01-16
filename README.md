@@ -4,8 +4,11 @@ Execute o  **docker-compose -f docker-compose-kafka.yml up -d** para inicializar
 
 ![image](https://user-images.githubusercontent.com/37228699/212746503-f3823746-2c65-4943-a727-e0d2993897d3.png)
 
-###### **Enviando:**
 Mensagem enviada para o tópico de VOTO no Kafka, de forma direta pelo producer, o mesmo será lido pelo nosso consumer, como no log abaixo:
+
+###### **Enviando:**
+![image](https://user-images.githubusercontent.com/37228699/212748597-3f64b99a-29a4-4cf1-8bd3-331fd1442fd5.png)
+
 
 ###### **Recebendo:**
 ![image](https://user-images.githubusercontent.com/37228699/212747036-3a440cb2-e433-4856-9ca5-5d7b43e3f4a9.png)
