@@ -17,6 +17,7 @@ import br.com.votacaosicredi.exception.InternalServerException;
 import br.com.votacaosicredi.exception.NotFoundException;
 import br.com.votacaosicredi.infrastructure.client.dto.ApiValidaCpfResponseDTO;
 import br.com.votacaosicredi.infrastructure.entity.VotoEntity;
+import br.com.votacaosicredi.infrastructure.messaging.VotacaoProducer;
 import br.com.votacaosicredi.infrastructure.repository.VotoRepository;
 
 import lombok.AllArgsConstructor;
@@ -31,16 +32,22 @@ public class VotacaoService {
 	private final PautaService pautaService;
 	private final ApiValidaCpfService apiValidaCpfService;
 	private final VotacaoConverter converter;
+	private final VotacaoProducer votacaoProducer;
 
 	@Transactional(timeout = 100)
 	public void salvarVotacao(VotacaoRequestDTO votacaoRequestDTO) {
 		try {
+			
 			//FAZ A CHAMADA PARA A API EXTERNA NO QUAL VALIDA O CPF 
 			//VOU DEIXAR COMENTADO POIS A API PROVAVELMENTE ESTÁ FORA (erro 404), MAS O FLUXO SERIA ESSE
 			//validarCpf(votacaoRequestDTO.getCpf());
+			
 			pautaService.buscarPorNome(votacaoRequestDTO.getNomePauta());
 			buscarPorNomeEhCpf(votacaoRequestDTO.getCpf(), votacaoRequestDTO.getNomePauta());
 			repository.save(converter.paraEntidadeVoto(votacaoRequestDTO));
+			
+			//PRUDUZIR UMA MENSAGEM PARA O NOSSO TOPICO
+			//votacaoProducer.send(votacaoRequestDTO);
 		} catch (InternalServerException | DataIntegrityViolationException e) {
 			log.error(
 					format(ERRO_AO_SALVAR_VOTO, e.getMessage()), e
